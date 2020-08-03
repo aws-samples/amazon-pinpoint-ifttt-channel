@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Amazon Pinpoint Salesforce Channel.  This application will call IFTTT webhooks.  Written in Node.
+
+Parameters:
+  IFTTTWEBHOOKURL:
+    Type: String
+    Description: The IFTTT Webhook URL
+
+Resources:
+  IFTTTFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ifttt/
+      Handler: app.handler
+      Runtime: nodejs12.x
+      Timeout: 60
+      Environment:
+        Variables:
+          IFTTTWEBHOOKURL: !Ref IFTTTWEBHOOKURL
+  
+  PinpointInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref IFTTTFunction
+      Principal: !Sub pinpoint.${AWS::Region}.amazonaws.com
+      SourceArn: !Sub arn:${AWS::Partition}:mobiletargeting:${AWS::Region}:${AWS::AccountId}:apps/*
+
+Outputs:
+  IFTTTFunction:
+    Description: "A function invoked by an Amazon Pinpoint Campaign or Journey that will issue a POST request to IFTTT Webhook"
+    Value: !GetAtt IFTTTFunction.Arn
