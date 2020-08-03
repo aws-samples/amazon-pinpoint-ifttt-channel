@@ -1,11 +1,24 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Amazon Pinpoint Salesforce Channel.  This application will call IFTTT webhooks.  Written in Node.
+Description: Amazon Pinpoint IFTTT Channel.  This application will call IFTTT webhooks.  Written in Node.
 
 Parameters:
   IFTTTWEBHOOKURL:
     Type: String
     Description: The IFTTT Webhook URL
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: amazon-pinpoint-ifttt-channel
+    Description: Amazon Pinpoint IFTTT Channel.  This application will deliver Amazon Pinpoint triggered messages to IFTTT.
+    Author: Amazon Pinpoint
+    SpdxLicenseId: MIT-0
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.md
+    Labels: ['amazon-pinpoint', 'pinpoint', 'custom-channel', 'IFTTT']
+    HomePageUrl: https://aws.amazon.com/pinpoint
+    SemanticVersion: 1.0.0
+    SourceCodeUrl: https://github.com/aws-samples/amazon-pinpoint-ifttt-channel
 
 Resources:
   IFTTTFunction:
