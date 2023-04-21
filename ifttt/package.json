@@ -7,7 +7,7 @@
   "author": "angrycider",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.2",
     "moment": "^2.25.3"
   },
   "scripts": {
